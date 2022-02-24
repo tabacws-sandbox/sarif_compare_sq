@@ -1,4 +1,4 @@
-name: SAST
+name: SAST Demo
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   ws-sast:
-    name: ThunderScan
+    name: WhiteSource ThunderScan
     runs-on: ubuntu-latest
     env:
       THUNDERSCAN_SCAN_PARENT_ID: ${{github.event.repository.name}}
