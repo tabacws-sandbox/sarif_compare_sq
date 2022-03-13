@@ -31,12 +31,12 @@ jobs:
         with:
           sarif_file: WhiteSource_SAST.sarif
      # Publish ThunderScan Results
-       - name: Upload TS Results
-         uses: actions/upload-artifact@v2
-         with:
-           name: TS Results
-           path: WhiteSource_SAST.html
-           retention-days: 1
+      - name: Upload TS Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: TS Results
+          path: WhiteSource_SAST.html
+          retention-days: 1
   codeql:
     name: CodeQL
     runs-on: ubuntu-latest
