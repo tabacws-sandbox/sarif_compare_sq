@@ -24,21 +24,19 @@ jobs:
       - name: Run WS-SAST
         run: |
           ./wscli --dir ./ --name=${{github.event.repository.name}}-${{github.ref_name}}-${{github.sha}} \
-          --baseline=true  
-
-# --report=true --formats sarif,html --filename WhiteSource_SAST
-## Upload ThunderScan Results to Github Security
-#      - name: Github Security Results Upload
-#        uses: github/codeql-action/upload-sarif@v1
-#        with:
-#          sarif_file: WhiteSource_SAST.sarif
-#     # Publish ThunderScan Results
-#       - name: Upload WS SAST Results
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: TS Results
-#           path: WhiteSource_SAST.html
-#           retention-days: 1
+          --baseline=true --report=true --formats sarif,html --filename WhiteSource_SAST
+# Upload ThunderScan Results to Github Security
+      - name: Github Security Results Upload
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: WhiteSource_SAST.sarif
+     # Publish ThunderScan Results
+      - name: Upload TS Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: TS Results
+          path: WhiteSource_SAST.html
+          retention-days: 1
   codeql:
     name: CodeQL
     runs-on: ubuntu-latest
