@@ -24,40 +24,38 @@ jobs:
       - name: Run WS-SAST
         run: |
           ./wscli --dir ./ --name=${{github.event.repository.name}}-${{github.ref_name}}-${{github.sha}} \
-          --baseline=true
-
-#--report=true --formats sarif,html --filename WhiteSource_SAST
-## Upload ThunderScan Results to Github Security
-#      - name: Github Security Results Upload
-#        uses: github/codeql-action/upload-sarif@v1
-#        with:
-#          sarif_file: WhiteSource_SAST.sarif
-#     # Publish ThunderScan Results
-#      - name: Upload TS Results
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: TS Results
-#          path: WhiteSource_SAST.html
-#          retention-days: 1
-  codeql:
-    name: CodeQL
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      # CodeQL
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+          --baseline=true --report=true --formats sarif,html --filename WhiteSource_SAST
+      # Upload WhiteSource Results to Github Security
+      - name: Github Security Results Upload
+        uses: github/codeql-action/upload-sarif@v1
         with:
-          languages: 'java'
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v1
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
-      - name: 'Upload CodeQL sarif'
+          sarif_file: WhiteSource_SAST.sarif
+      # Publish ThunderScan Results
+      - name: Upload TS Results
         uses: actions/upload-artifact@v2
         with:
-          name: CodeQL-sarif
-          path: /home/runner/work/${{ github.event.repository.name }}/results/java.sarif
+          name: TS Results
+          path: WhiteSource_SAST.html
           retention-days: 1
+  # codeql:
+  #   name: CodeQL
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
+  #     # CodeQL
+  #     - name: Initialize CodeQL
+  #       uses: github/codeql-action/init@v1
+  #       with:
+  #         languages: 'java'
+  #     - name: Autobuild
+  #       uses: github/codeql-action/autobuild@v1
+  #     - name: Perform CodeQL Analysis
+  #       uses: github/codeql-action/analyze@v1
+  #     - name: 'Upload CodeQL sarif'
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: CodeQL-sarif
+  #         path: /home/runner/work/${{ github.event.repository.name }}/results/java.sarif
+  #         retention-days: 1
